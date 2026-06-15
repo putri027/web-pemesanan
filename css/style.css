@@ -1,0 +1,565 @@
+/* ========================================================
+   GLOBAL VARIABLES & RESET
+   ======================================================== */
+:root {
+    --primary: #2E7D32;      /* Hijau - Warna Utama */
+    --primary-hover: #1B5E20; /* Hijau Gelap untuk efek hover */
+    --accent: #FFC107;       /* Emas - Warna Aksen */
+    --accent-hover: #FFD54F;
+    --bg-light: #F8F9FA;
+    --text-dark: #2C3E50;
+    --text-muted: #7F8C8D;
+    --white: #FFFFFF;
+    
+    /* Bayangan & Radius Modern */
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    
+    /* Transisi */
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* ========================================================
+   TYPOGRAPHY & BUTTONS
+   ======================================================== */
+h1, h2, h3, h4 {
+    color: var(--text-dark);
+}
+
+button {
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+/* ========================================================
+   NAVBAR
+   ======================================================== */
+.navbar {
+    background: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 8%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+}
+
+.logo h2 {
+    color: var(--white);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.menu a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: var(--transition);
+    padding: 5px 0;
+    position: relative;
+}
+
+/* Efek garis bawah saat hover pada menu */
+.menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    bottom: 0;
+    left: 0;
+    transition: var(--transition);
+}
+
+.menu a:hover {
+    color: var(--accent);
+}
+
+.menu a:hover::after {
+    width: 100%;
+}
+
+/* ========================================================
+   HERO SECTION
+   ======================================================== */
+.hero {
+    height: 450px;
+    /* Nilai RGB untuk #2E7D32 adalah 46, 125, 50 */
+    background: linear-gradient(rgba(46, 125, 50, 0.6), rgba(0, 0, 0, 0.7)), url("gambar/banner.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-content {
+    color: var(--white);
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hero-content h1 {
+    font-size: 55px;
+    margin-bottom: 15px;
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+    font-size: 22px;
+    color: #eee;
+    font-weight: 300;
+}
+
+/* ========================================================
+   PRODUK SECTION
+   ======================================================== */
+.produk {
+    padding: 80px 8%;
+}
+
+.produk h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--primary);
+    font-size: 32px;
+    position: relative;
+}
+
+.produk h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    display: block;
+    margin: 10px auto 0;
+    border-radius: 5px;
+}
+
+.produk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+/* PRODUCT CARDS */
+.card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+    border: 1px solid #f0f0f0;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+}
+
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 3px solid var(--accent);
+}
+
+.card h3 {
+    padding: 20px 20px 5px;
+    font-size: 20px;
+}
+
+.card p {
+    padding: 0 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+    flex-grow: 1;
+}
+
+.card h4 {
+    padding: 15px 20px;
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.card label {
+    padding: 0 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.qty {
+    width: 70px;
+    padding: 8px 12px;
+    margin: 5px 20px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.qty:focus {
+    border-color: var(--primary);
+}
+
+.card button.add-cart {
+    width: calc(100% - 40px);
+    margin: 0 auto;
+    padding: 12px;
+    border: none;
+    background: var(--primary);
+    color: var(--white);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.card button.add-cart:hover {
+    background: var(--primary-hover);
+}
+
+/* ========================================================
+   KERANJANG (TABLES)
+   ======================================================== */
+.cart-section {
+    background: var(--white);
+    width: 84%;
+    margin: 40px auto 80px;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.cart-section h2 {
+    margin-bottom: 25px;
+    color: var(--primary);
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th {
+    background: var(--primary);
+    color: var(--white);
+    padding: 15px;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    vertical-align: middle;
+}
+
+table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+.hapus {
+    background: #E53935;
+    border: none;
+    padding: 8px 16px;
+    color: var(--white);
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.hapus:hover {
+    background: #C62828;
+}
+
+#totalBelanja {
+    margin-top: 20px;
+    color: var(--primary);
+    font-size: 24px;
+    text-align: right;
+}
+
+#checkoutBtn {
+    display: block;
+    margin: 20px 0 0 auto;
+    padding: 15px 40px;
+    border: none;
+    background: var(--accent);
+    color: var(--text-dark);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#checkoutBtn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* ========================================================
+   FORMS & BOXES (LOGIN, CHECKOUT, ADMIN, STRUK)
+   ======================================================== */
+.login-box, .checkout-container, .admin, .struk {
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin: 60px auto;
+}
+
+/* Spesifik Lebar Container */
+.login-box { max-width: 450px; }
+.checkout-container { max-width: 700px; }
+.admin { width: 90%; max-width: 1000px; }
+.struk { max-width: 800px; border-top: 8px solid var(--primary); }
+
+.login-box h2, .checkout-container h2, .admin h1, .struk h1 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    transition: var(--transition);
+    outline: none;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--primary);
+    /* Nilai RGB untuk #2E7D32 adalah 46, 125, 50 */
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+/* Global Button Styles for Forms */
+.login-btn, .btn-pesan {
+    width: 100%;
+    padding: 15px;
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.login-btn:hover, .btn-pesan:hover {
+    background: var(--primary-hover);
+}
+
+/* Admin Dashboard Specifics */
+.admin-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.box {
+    background: var(--primary);
+    color: var(--white);
+    padding: 30px 20px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.box:hover {
+    background: var(--primary-hover);
+    transform: translateY(-5px);
+}
+
+.logout {
+    padding: 12px 25px;
+    background: #E53935;
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.logout:hover {
+    background: #C62828;
+}
+
+/* Struk Specifics */
+.struk .info p {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.struk .total {
+    margin-top: 25px;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary);
+    text-align: right;
+    border-top: 2px dashed #ddd;
+    padding-top: 20px;
+}
+
+.btn-area {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn-area .btn {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.cetak { background: #1976D2; }
+.cetak:hover { background: #1565C0; }
+
+.wa { background: #25D366; }
+.wa:hover { background: #128C7E; }
+
+/* ========================================================
+   FOOTER
+   ======================================================== */
+footer {
+    background: var(--text-dark);
+    color: var(--white);
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+footer h2 {
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #bbb;
+    font-size: 16px;
+}
+
+/* ========================================================
+   RESPONSIVE DESIGN (MOBILE & TABLET)
+   ======================================================== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 5%;
+    }
+
+    .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .hero-content h1 {
+        font-size: 38px;
+    }
+    
+    .hero-content p {
+        font-size: 18px;
+    }
+
+    .cart-section, .produk {
+        width: 95%;
+        padding: 20px;
+    }
+
+    /* Membuat tabel menjadi responsif di layar kecil */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    
+    table thead {
+        display: none; /* Sembunyikan header tabel di mobile */
+    }
+    
+    table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+    
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        padding-right: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .btn-area {
+        flex-direction: column;
+    }
+}

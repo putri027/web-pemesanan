@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Hikmah</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <h2>Toko Hikmah</h2>
+        </div>
+        <ul class="menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="#produk">Produk</a></li>
+            <li><a href="#keranjang">Keranjang</a></li>
+            <li><a href="login.html">Admin</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Kue Tradisional Khas Bugis</h1>
+            <p>Bolu Cukke, Bolu Susu, Cucuru dan Baje Canggoreng</p>
+        </div>
+    </section>
+
+    <section id="produk" class="produk">
+        <h2>Daftar Produk</h2>
+        <div class="produk-grid">
+
+            <div class="card">
+                <img src="images/bolu cukke.jpg" alt="Bolu Cukke">
+                <h3>Bolu Cukke</h3>
+                <p>Kue khas Bugis yang manis dan lembut</p>
+                <h4>13000</h4>
+                <label>Jumlah :</label>
+                <input type="number" class="qty" min="1" value="1">
+                <button class="add-cart">Tambah Keranjang</button>
+            </div>
+
+            <div class="card">
+                <img src="images/bolu susu.jpeg" alt="Bolu Susu">
+                <h3>Bolu Susu</h3>
+                <p>Bolu susu lembut dan nikmat</p>
+                <h4>13000</h4>
+                <label>Jumlah :</label>
+                <input type="number" class="qty" min="1" value="1">
+                <button class="add-cart">Tambah Keranjang</button>
+            </div>
+
+            <div class="card">
+                <img src="images/Cucuru.jpg" alt="Cucuru">
+                <h3>Cucuru</h3>
+                <p>Jajanan tradisional khas Bugis</p>
+                <h4>10000</h4>
+                <label>Jumlah :</label>
+                <input type="number" class="qty" min="1" value="1">
+                <button class="add-cart">Tambah Keranjang</button>
+            </div>
+
+            <div class="card">
+                <img src="images/baje canggoreng.jpg" alt="Baje Canggoreng">
+                <h3>Baje Canggoreng</h3>
+                <p>Manis dan renyah</p>
+                <h4>10000</h4>
+                <label>Jumlah :</label>
+                <input type="number" class="qty" min="1" value="1">
+                <button class="add-cart">Tambah Keranjang</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="keranjang" class="cart-section">
+        <h2>Keranjang Belanja</h2>
+        <table id="cartTable">
+            <thead>
+                <tr>
+                    <th>Produk</th>
+                    <th>Jumlah</th>
+                    <th>Harga</th>
+                    <th>Subtotal</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+        
+        <h3 id="totalBelanja">Total : Rp 0</h3>
+        <button id="checkoutBtn">Checkout</button>
+    </section>
+
+    <footer>
+        <h2>Toko Hikmah</h2>
+        <p>WhatsApp : 085342288850</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+
+</body>
+</html>

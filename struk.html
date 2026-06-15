@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Struk Pembelian</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="struk">
+    <h1>TOKO HIKMAH</h1>
+
+    <div class="info">
+        <p id="noPesanan"></p>
+        <p id="tanggal"></p>
+        <p id="nama"></p>
+        <p id="hp"></p>
+        <p id="alamat"></p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Produk</th>
+                <th>Jumlah</th>
+                <th>Harga</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="isiProduk">
+        </tbody>
+    </table>
+
+    <div class="total" id="total">
+    </div>
+
+    <div class="btn-area">
+        <button class="btn cetak" onclick="window.print()">
+            Cetak Struk
+        </button>
+
+        <button class="btn wa" onclick="kirimWA()">
+            Kirim ke WhatsApp
+        </button>
+    </div>
+</div>
+
+<script>
+let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+let nama = localStorage.getItem("nama");
+let hp = localStorage.getItem("hp");
+let alamat = localStorage.getItem("alamat");
+
+let nomorPesanan = "TH-" + Date.now();
+
+document.getElementById("noPesanan").innerHTML = "<b>No Pesanan:</b> " + nomorPesanan;
+document.getElementById("tanggal").innerHTML = "<b>Tanggal:</b> " + new Date().toLocaleString("id-ID");
+document.getElementById("nama").innerHTML = "<b>Nama:</b> " + nama;
+document.getElementById("hp").innerHTML = "<b>No HP:</b> " + hp;
+document.getElementById("alamat").innerHTML = "<b>Alamat:</b> " + alamat;
+
+let total = 0;
+let tbody = document.getElementById("isiProduk");
+
+keranjang.forEach(item=>{
+    total += item.subtotal;
+    tbody.innerHTML += `
+    <tr>
+        <td>${item.produk}</td>
+        <td>${item.jumlah}</td>
+        <td>Rp ${item.harga.toLocaleString('id-ID')}</td>
+        <td>Rp ${item.subtotal.toLocaleString('id-ID')}</td>
+    </tr>
+    `;
+});
+
+document.getElementById("total").innerHTML = "Total Belanja : Rp " + total.toLocaleString('id-ID');
+
+function kirimWA(){
+    let pesan = `Halo Toko Hikmah\n\nNo Pesanan : ${nomorPesanan}\nNama : ${nama}\nNo HP : ${hp}\nAlamat : ${alamat}\n\nTotal : Rp ${total.toLocaleString('id-ID')}\n\nTerima kasih`;
+    window.open("https://wa.me/6285342288850?text=" + encodeURIComponent(pesan));
+}
+</script>
+
+</body>
+</html>
