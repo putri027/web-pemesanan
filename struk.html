@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Struk Pembelian</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struk Pembelian</title>
 
-<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
@@ -65,8 +65,13 @@ document.getElementById("alamat").innerHTML = "<b>Alamat:</b> " + alamat;
 let total = 0;
 let tbody = document.getElementById("isiProduk");
 
-keranjang.forEach(item=>{
+// Variabel baru untuk menampung teks rincian pesanan ke WA
+let rincianPesanan = "";
+
+keranjang.forEach(item => {
     total += item.subtotal;
+    
+    // Memasukkan data ke dalam tabel HTML
     tbody.innerHTML += `
     <tr>
         <td>${item.produk}</td>
@@ -75,12 +80,17 @@ keranjang.forEach(item=>{
         <td>Rp ${item.subtotal.toLocaleString('id-ID')}</td>
     </tr>
     `;
+
+    // Menyusun teks rincian pesanan untuk WhatsApp
+    rincianPesanan += `- ${item.produk} (${item.jumlah}x) : Rp ${item.subtotal.toLocaleString('id-ID')}\n`;
 });
 
 document.getElementById("total").innerHTML = "Total Belanja : Rp " + total.toLocaleString('id-ID');
 
 function kirimWA(){
-    let pesan = `Halo Toko Hikmah\n\nNo Pesanan : ${nomorPesanan}\nNama : ${nama}\nNo HP : ${hp}\nAlamat : ${alamat}\n\nTotal : Rp ${total.toLocaleString('id-ID')}\n\nTerima kasih`;
+    // Memasukkan variabel rincianPesanan ke dalam pesan WA
+    let pesan = `Halo Toko Hikmah\n\nNo Pesanan : ${nomorPesanan}\nNama : ${nama}\nNo HP : ${hp}\nAlamat : ${alamat}\n\nRincian Pesanan:\n${rincianPesanan}\nTotal : Rp ${total.toLocaleString('id-ID')}\n\nTerima kasih`;
+    
     window.open("https://wa.me/6285242337694?text=" + encodeURIComponent(pesan));
 }
 </script>
