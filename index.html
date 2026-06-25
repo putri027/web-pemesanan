@@ -3,150 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Hikmah</title>
-
+    <title>Toko Hikmah - Kue Tradisional</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <style>
-        /* ========================================================
-           KUSTOMISASI KHUSUS HERO SECTION (LATAR GRADIEN)
-           ======================================================== */
-        .hero {
-            height: 500px; /* Sedikit ditinggikan untuk menampung logo yang lebih besar */
-            background: linear-gradient(rgba(46, 125, 50, 0.65), rgba(0, 0, 0, 0.75)), url("images/banner.jpg");
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .hero-content {
-            color: #FFFFFF; /* Teks kembali putih agar terbaca di atas gradien */
-        }
-
-        .hero-content h1 {
-            font-size: 42px;
-            color: #FFFFFF;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* Efek bayangan teks agar lebih tegas */
-            margin-bottom: 10px;
-        }
-
-        .hero-content p {
-            font-size: 19px;
-            color: #ECEFF1;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Gaya untuk Logo yang Diperbesar */
-        .hero-logo {
-            width: 150px; /* Diperbesar dari 120px */
-            height: 150px; /* Diperbesar dari 120px */
-            object-fit: cover;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            border: 4px solid #FFC107; /* Menggunakan aksen emas agar kontras dengan hijau gradien */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            background: #FFFFFF;
-        }
-    </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo">
-            <h2>Toko Hikmah</h2>
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="images/logo.png" alt="Logo Toko Hikmah" class="nav-logo" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=150&auto=format&fit=crop'">
+                    <h2>Toko Hikmah</h2>
+                </a>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Cari Bolu Cukke, Cucuru...">
+                <button type="button"><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="nav-icons">
+                <a href="#keranjang" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-badge" class="badge">0</span>
+                </a>
+                <a href="login.html" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </div>
         </div>
-        <ul class="menu">
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="#produk">Produk</a></li>
-            <li><a href="#keranjang">Keranjang</a></li>
-            <li><a href="login.html">Admin</a></li>
-        </ul>
-    </nav>
+    </header>
 
     <section class="hero">
         <div class="hero-content">
-            <img src="images/logo.png" class="hero-logo" alt="Logo Toko Hikmah" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=500&auto=format&fit=crop'">
-            <h1>Kue Tradisional Khas Bugis</h1>
-            <p>Bolu Cukke, Bolu Susu, Cucuru dan Baje Canggoreng</p>
+            <h1>Cita Rasa Khas Bugis</h1>
+            <p>Bolu Cukke, Bolu Susu, Cucuru, dan Baje Canggoreng Spesial</p>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="cat-container">
+            <div class="cat-item">
+                <div class="icon-box"><i class="fas fa-bread-slice"></i></div>
+                <p>Bolu Panggang</p>
+            </div>
+            <div class="cat-item">
+                <div class="icon-box"><i class="fas fa-cookie"></i></div>
+                <p>Kue Kering</p>
+            </div>
+            <div class="cat-item">
+                <div class="icon-box"><i class="fas fa-star"></i></div>
+                <p>Terlaris</p>
+            </div>
+            <div class="cat-item">
+                <div class="icon-box"><i class="fas fa-tags"></i></div>
+                <p>Promo</p>
+            </div>
         </div>
     </section>
 
     <section id="produk" class="produk">
-        <h2>Daftar Produk</h2>
+        <div class="section-header">
+            <h2>Rekomendasi Spesial</h2>
+            <a href="#" class="lihat-semua">Lihat Semua <i class="fas fa-chevron-right"></i></a>
+        </div>
+
         <div class="produk-grid">
-
-            <div class="card">
-                <img src="images/bolu cukke.jpg" alt="Bolu Cukke">
-                <h3>Bolu Cukke</h3>
-                <p>Kue khas Bugis yang manis dan lembut</p>
-                <h4>13000</h4>
-                <label>Jumlah :</label>
-                <input type="number" class="qty" min="1" value="1">
-                <button class="add-cart">Tambah Keranjang</button>
+            <div class="card" data-nama="Bolu Cukke" data-harga="13000">
+                <div class="promo-badge">Terlaris</div>
+                <img src="images/bolu cukke.jpg" alt="Bolu Cukke" onerror="this.src='https://images.unsplash.com/photo-1614088659850-8b0933c0eb4a?q=80&w=300&auto=format&fit=crop'">
+                <div class="card-body">
+                    <h3>Bolu Cukke</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        <span>(120)</span>
+                    </div>
+                    <div class="price-row">
+                        <h4>Rp 13.000</h4>
+                        <span class="sold">1.2RB Terjual</span>
+                    </div>
+                    <button class="add-cart"><i class="fas fa-cart-plus"></i> Keranjang</button>
+                </div>
             </div>
 
-            <div class="card">
-                <img src="images/bolu susu.jpeg" alt="Bolu Susu">
-                <h3>Bolu Susu</h3>
-                <p>Bolu susu lembut dan nikmat</p>
-                <h4>13000</h4>
-                <label>Jumlah :</label>
-                <input type="number" class="qty" min="1" value="1">
-                <button class="add-cart">Tambah Keranjang</button>
+            <div class="card" data-nama="Bolu Susu" data-harga="13000">
+                <img src="images/bolu susu.jpeg" alt="Bolu Susu" onerror="this.src='https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=300&auto=format&fit=crop'">
+                <div class="card-body">
+                    <h3>Bolu Susu</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <span>(85)</span>
+                    </div>
+                    <div class="price-row">
+                        <h4>Rp 13.000</h4>
+                        <span class="sold">800+ Terjual</span>
+                    </div>
+                    <button class="add-cart"><i class="fas fa-cart-plus"></i> Keranjang</button>
+                </div>
             </div>
 
-            <div class="card">
-                <img src="images/Cucuru.jpg" alt="Cucuru">
-                <h3>Cucuru</h3>
-                <p>Jajanan tradisional khas Bugis</p>
-                <h4>10000</h4>
-                <label>Jumlah :</label>
-                <input type="number" class="qty" min="1" value="1">
-                <button class="add-cart">Tambah Keranjang</button>
+            <div class="card" data-nama="Cucuru" data-harga="10000">
+                <div class="promo-badge promo-diskon">Diskon</div>
+                <img src="images/Cucuru.jpg" alt="Cucuru" onerror="this.src='https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=300&auto=format&fit=crop'">
+                <div class="card-body">
+                    <h3>Cucuru</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                        <span>(45)</span>
+                    </div>
+                    <div class="price-row">
+                        <h4>Rp 10.000</h4>
+                        <span class="sold">350 Terjual</span>
+                    </div>
+                    <button class="add-cart"><i class="fas fa-cart-plus"></i> Keranjang</button>
+                </div>
             </div>
 
-            <div class="card">
-                <img src="images/baje canggoreng.jpg" alt="Baje Canggoreng">
-                <h3>Baje Canggoreng</h3>
-                <p>Manis dan renyah</p>
-                <h4>10000</h4>
-                <label>Jumlah :</label>
-                <input type="number" class="qty" min="1" value="1">
-                <button class="add-cart">Tambah Keranjang</button>
+            <div class="card" data-nama="Baje Canggoreng" data-harga="10000">
+                <img src="images/baje canggoreng.jpg" alt="Baje Canggoreng" onerror="this.src='https://images.unsplash.com/photo-1621939514649-280e2ee25f60?q=80&w=300&auto=format&fit=crop'">
+                <div class="card-body">
+                    <h3>Baje Canggoreng</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        <span>(90)</span>
+                    </div>
+                    <div class="price-row">
+                        <h4>Rp 10.000</h4>
+                        <span class="sold">950 Terjual</span>
+                    </div>
+                    <button class="add-cart"><i class="fas fa-cart-plus"></i> Keranjang</button>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="keranjang" class="cart-section">
-        <h2>Keranjang Belanja</h2>
-        <table id="cartTable">
-            <thead>
-                <tr>
-                    <th>Produk</th>
-                    <th>Jumlah</th>
-                    <th>Harga</th>
-                    <th>Subtotal</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <h2><i class="fas fa-shopping-basket"></i> Keranjang Belanja</h2>
+        <div class="table-responsive">
+            <table id="cartTable">
+                <thead>
+                    <tr>
+                        <th>Produk</th>
+                        <th>Harga</th>
+                        <th>Jumlah</th>
+                        <th>Subtotal</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="5" class="empty-cart">Keranjang masih kosong</td></tr>
+                </tbody>
+            </table>
+        </div>
         
-        <h3 id="totalBelanja">Total : Rp 0</h3>
-        <button id="checkoutBtn">Checkout</button>
+        <div class="cart-footer">
+            <h3 id="totalBelanja">Total: <span>Rp 0</span></h3>
+            <button id="checkoutBtn">Checkout Sekarang</button>
+        </div>
     </section>
 
     <footer>
-        <h2>Toko Hikmah</h2>
-        <p>WhatsApp : 085342288850</p>
+        <div class="footer-content">
+            <h2>Toko Hikmah</h2>
+            <p>Pusat Oleh-Oleh Kue Tradisional Khas Bugis</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-whatsapp"></i> 085342288850</a>
+                <a href="#"><i class="fab fa-instagram"></i> @tokohikmah</a>
+            </div>
+        </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <div id="toast" class="toast">Produk ditambahkan ke keranjang!</div>
 
+    <script src="js/script.js"></script>
 </body>
 </html>
