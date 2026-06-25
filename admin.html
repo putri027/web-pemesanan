@@ -3,148 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
+    <title>Dashboard Admin - Toko Hikmah</title>
+
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* Gaya tambahan khusus untuk interaksi tabel di dalam Admin */
-        .admin-content {
-            display: none; /* Sembunyikan semua konten detail secara default */
-            margin-top: 20px;
-        }
-        .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        .btn-kembali {
-            background: #7F8C8D;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .btn-kembali:hover { background: #606b6b; }
-        .btn-tambah {
-            background: #25D366;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .text-center { text-align: center; }
-        .badge {
-            background: #FFC107;
-            color: #000;
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<div class="admin">
-    <h1>Dashboard Admin</h1>
-
-    <div class="admin-menu" id="menu-utama">
-        <div class="box" onclick="bukaMenu('kelola-produk')">Kelola Produk</div>
-        <div class="box" onclick="bukaMenu('pesanan-masuk')">Pesanan Masuk</div>
-        <div class="box" onclick="bukaMenu('data-pelanggan')">Data Pelanggan</div>
-        <div class="box" onclick="bukaMenu('laporan-penjualan')">Laporan Penjualan</div>
-    </div>
-
-    <div id="kelola-produk" class="admin-content">
-        <div class="header-section">
-            <h2>Kelola Produk</h2>
-            <div>
-                <button class="btn-kembali" onclick="kembaliKeMenu()">Kembali</button>
-                <button class="btn-tambah">+ Tambah Produk</button>
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="#" class="logo-link" onclick="kembaliKeMenu()">
+                    <img src="images/logo.png" alt="Logo" class="nav-logo" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=150&auto=format&fit=crop'">
+                    <h2>Toko Hikmah <span class="checkout-title">| Admin Panel</span></h2>
+                </a>
+            </div>
+            <div class="nav-icons">
+                <button class="btn-logout-header" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nama Produk</th>
-                    <th>Harga</th>
-                    <th>Stok</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Bolu Cukke</td>
-                    <td>Rp 15.000</td>
-                    <td>Tersedia</td>
-                    <td><button class="hapus">Hapus</button></td>
-                </tr>
-                <tr>
-                    <td>Bolu Susu</td>
-                    <td>Rp 18.000</td>
-                    <td>Tersedia</td>
-                    <td><button class="hapus">Hapus</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    </header>
 
-    <div id="pesanan-masuk" class="admin-content">
-        <div class="header-section">
-            <h2>Pesanan Masuk</h2>
-            <button class="btn-kembali" onclick="kembaliKeMenu()">Kembali</button>
+    <div class="admin-wrapper">
+        <div class="dashboard-grid" id="menu-utama">
+            <div class="dash-card" onclick="bukaMenu('kelola-produk')">
+                <div class="dash-icon"><i class="fas fa-box-open"></i></div>
+                <h3>Kelola Produk</h3>
+                <p>Tambah, edit, atau hapus produk</p>
+            </div>
+            <div class="dash-card" onclick="bukaMenu('pesanan-masuk')">
+                <div class="dash-icon"><i class="fas fa-shopping-bag"></i></div>
+                <h3>Pesanan Masuk</h3>
+                <p>Cek pesanan baru dari pelanggan</p>
+            </div>
+            <div class="dash-card" onclick="bukaMenu('data-pelanggan')">
+                <div class="dash-icon"><i class="fas fa-users"></i></div>
+                <h3>Data Pelanggan</h3>
+                <p>Informasi kontak pembeli</p>
+            </div>
+            <div class="dash-card" onclick="bukaMenu('laporan-penjualan')">
+                <div class="dash-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Laporan</h3>
+                <p>Ringkasan total pendapatan</p>
+            </div>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Pelanggan</th>
-                    <th>Alamat</th>
-                    <th>Total Belanja</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="tabelPesanan">
-                </tbody>
-        </table>
-    </div>
 
-    <div id="data-pelanggan" class="admin-content">
-        <div class="header-section">
-            <h2>Data Pelanggan</h2>
-            <button class="btn-kembali" onclick="kembaliKeMenu()">Kembali</button>
+        <div id="kelola-produk" class="admin-content">
+            <div class="header-section">
+                <h2><i class="fas fa-box-open"></i> Kelola Produk</h2>
+                <div class="action-buttons">
+                    <button class="btn-kembali" onclick="kembaliKeMenu()"><i class="fas fa-arrow-left"></i> Kembali</button>
+                    <button class="btn-tambah"><i class="fas fa-plus"></i> Tambah</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Nama Produk</th>
+                            <th>Harga</th>
+                            <th>Stok</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bolu Cukke</td>
+                            <td>Rp 13.000</td>
+                            <td><span class="badge badge-green">Tersedia</span></td>
+                            <td>
+                                <button class="btn-aksi edit"><i class="fas fa-edit"></i></button>
+                                <button class="btn-aksi hapus"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Bolu Susu</td>
+                            <td>Rp 13.000</td>
+                            <td><span class="badge badge-green">Tersedia</span></td>
+                            <td>
+                                <button class="btn-aksi edit"><i class="fas fa-edit"></i></button>
+                                <button class="btn-aksi hapus"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>No. WhatsApp</th>
-                    <th>Alamat Lengkap</th>
-                </tr>
-            </thead>
-            <tbody id="tabelPelanggan">
-                </tbody>
-        </table>
-    </div>
 
-    <div id="laporan-penjualan" class="admin-content">
-        <div class="header-section">
-            <h2>Laporan Penjualan</h2>
-            <button class="btn-kembali" onclick="kembaliKeMenu()">Kembali</button>
+        <div id="pesanan-masuk" class="admin-content">
+            <div class="header-section">
+                <h2><i class="fas fa-shopping-bag"></i> Pesanan Masuk</h2>
+                <button class="btn-kembali" onclick="kembaliKeMenu()"><i class="fas fa-arrow-left"></i> Kembali</button>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Pelanggan</th>
+                            <th>Alamat</th>
+                            <th>Total Belanja</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelPesanan">
+                        </tbody>
+                </table>
+            </div>
         </div>
-        <div class="box" style="background: #27ae60; cursor: default; margin-bottom:20px;">
-            <h3 style="color:white; margin-bottom: 5px;">Total Pendapatan Terakhir</h3>
-            <h2 style="color:white; font-size: 30px;" id="totalPendapatan">Rp 0</h2>
-        </div>
-        <p class="text-center" style="color:#7F8C8D;">*Data ini adalah simulasi dari pesanan terakhir di perangkat ini.</p>
-    </div>
 
-    <button class="logout" id="btnLogout" onclick="logout()">Logout</button>
-</div>
+        <div id="data-pelanggan" class="admin-content">
+            <div class="header-section">
+                <h2><i class="fas fa-users"></i> Data Pelanggan</h2>
+                <button class="btn-kembali" onclick="kembaliKeMenu()"><i class="fas fa-arrow-left"></i> Kembali</button>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Nama Lengkap</th>
+                            <th>No. WhatsApp</th>
+                            <th>Alamat Lengkap</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelPelanggan">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="laporan-penjualan" class="admin-content">
+            <div class="header-section">
+                <h2><i class="fas fa-chart-line"></i> Laporan Penjualan</h2>
+                <button class="btn-kembali" onclick="kembaliKeMenu()"><i class="fas fa-arrow-left"></i> Kembali</button>
+            </div>
+            <div class="revenue-box">
+                <div class="revenue-icon"><i class="fas fa-wallet"></i></div>
+                <div class="revenue-info">
+                    <h3>Total Pendapatan Terakhir</h3>
+                    <h2 id="totalPendapatan">Rp 0</h2>
+                </div>
+            </div>
+            <p class="text-muted text-center"><i class="fas fa-info-circle"></i> Data ini adalah simulasi dari pesanan terakhir di perangkat ini.</p>
+        </div>
+    </div>
 
 <script>
     // 1. Pengecekan Login
@@ -153,23 +157,28 @@
     }
 
     function logout(){
-        localStorage.removeItem("adminLogin");
-        window.location.href = "login.html";
+        let confirmLogout = confirm("Apakah Anda yakin ingin keluar?");
+        if(confirmLogout) {
+            localStorage.removeItem("adminLogin");
+            window.location.href = "login.html";
+        }
     }
 
-    // 2. Logika Buka/Tutup Menu (Single Page Application)
+    // 2. Logika Buka/Tutup Menu SPA
     function bukaMenu(idMenu) {
         document.getElementById('menu-utama').style.display = 'none';
-        document.getElementById('btnLogout').style.display = 'none';
         
         let contents = document.querySelectorAll('.admin-content');
         contents.forEach(content => {
             content.style.display = 'none';
         });
 
-        document.getElementById(idMenu).style.display = 'block';
+        // Animasi fade in sederhana
+        let selectedMenu = document.getElementById(idMenu);
+        selectedMenu.style.display = 'block';
+        selectedMenu.style.animation = 'fadeIn 0.3s ease';
 
-        // Load data jika menu tertentu dibuka
+        // Load data khusus untuk menu tertentu
         if (idMenu === 'pesanan-masuk' || idMenu === 'data-pelanggan' || idMenu === 'laporan-penjualan') {
             loadDataDariLocalStorage();
         }
@@ -180,11 +189,13 @@
         contents.forEach(content => {
             content.style.display = 'none';
         });
-        document.getElementById('menu-utama').style.display = 'grid';
-        document.getElementById('btnLogout').style.display = 'block';
+        
+        let menuUtama = document.getElementById('menu-utama');
+        menuUtama.style.display = 'grid';
+        menuUtama.style.animation = 'fadeIn 0.3s ease';
     }
 
-    // 3. Logika Menarik Data dari Checkout (Simulasi LocalStorage)
+    // 3. Menarik Data dari Checkout (Simulasi LocalStorage)
     function loadDataDariLocalStorage() {
         let nama = localStorage.getItem("nama");
         let hp = localStorage.getItem("hp");
@@ -195,26 +206,27 @@
         let tbodyPelanggan = document.getElementById("tabelPelanggan");
         let teksPendapatan = document.getElementById("totalPendapatan");
 
-        // Hitung total belanja dari keranjang
         let totalBelanja = 0;
         keranjang.forEach(item => {
             totalBelanja += item.subtotal;
         });
 
-        // Tampilkan Data Pesanan & Pelanggan Jika Ada
         if (nama && totalBelanja > 0) {
             tbodyPesanan.innerHTML = `
                 <tr>
-                    <td>${nama}<br><small>${hp}</small></td>
+                    <td><strong>${nama}</strong><br><small class="text-muted"><i class="fab fa-whatsapp"></i> ${hp}</small></td>
                     <td>${alamat}</td>
-                    <td>Rp ${totalBelanja.toLocaleString('id-ID')}</td>
-                    <td><span class="badge">Menunggu Konfirmasi</span></td>
+                    <td class="price-text">Rp ${totalBelanja.toLocaleString('id-ID')}</td>
+                    <td><span class="badge badge-yellow">Menunggu</span></td>
+                    <td>
+                        <button class="btn-aksi btn-acc" title="Terima Pesanan"><i class="fas fa-check"></i></button>
+                    </td>
                 </tr>
             `;
 
             tbodyPelanggan.innerHTML = `
                 <tr>
-                    <td>${nama}</td>
+                    <td><strong>${nama}</strong></td>
                     <td>${hp}</td>
                     <td>${alamat}</td>
                 </tr>
@@ -222,9 +234,12 @@
 
             teksPendapatan.innerHTML = "Rp " + totalBelanja.toLocaleString('id-ID');
         } else {
-            let emptyRow = `<tr><td colspan="4" class="text-center">Belum ada data pesanan saat ini.</td></tr>`;
+            let emptyRow = `<tr><td colspan="5" class="text-center empty-cart" style="padding: 30px;"><i class="fas fa-folder-open" style="font-size:30px; color:#ccc; margin-bottom:10px; display:block;"></i>Belum ada data saat ini.</td></tr>`;
             tbodyPesanan.innerHTML = emptyRow;
-            tbodyPelanggan.innerHTML = emptyRow;
+            
+            let emptyRowPelanggan = `<tr><td colspan="3" class="text-center empty-cart" style="padding: 30px;">Belum ada data saat ini.</td></tr>`;
+            tbodyPelanggan.innerHTML = emptyRowPelanggan;
+            
             teksPendapatan.innerHTML = "Rp 0";
         }
     }
