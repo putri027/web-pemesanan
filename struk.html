@@ -3,97 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struk Pembelian</title>
+    <title>Struk Pembelian - Toko Hikmah</title>
 
     <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<div class="struk">
-    <h1>TOKO HIKMAH</h1>
+    <div class="struk-wrapper">
+        <div class="struk-container">
+            <div class="struk-header">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2>Pesanan Berhasil!</h2>
+                <p>Terima kasih telah berbelanja di Toko Hikmah</p>
+            </div>
 
-    <div class="info">
-        <p id="noPesanan"></p>
-        <p id="tanggal"></p>
-        <p id="nama"></p>
-        <p id="hp"></p>
-        <p id="alamat"></p>
+            <div class="struk-info">
+                <div class="info-group">
+                    <span>No Pesanan</span>
+                    <strong id="noPesanan"></strong>
+                </div>
+                <div class="info-group">
+                    <span>Tanggal</span>
+                    <strong id="tanggal"></strong>
+                </div>
+                <div class="info-group">
+                    <span>Nama Penerima</span>
+                    <strong id="nama"></strong>
+                </div>
+                <div class="info-group">
+                    <span>Nomor HP</span>
+                    <strong id="hp"></strong>
+                </div>
+                <div class="info-group full-width">
+                    <span>Alamat Pengiriman</span>
+                    <strong id="alamat"></strong>
+                </div>
+            </div>
+
+            <div class="struk-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produk</th>
+                            <th>Jml</th>
+                            <th>Harga</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="isiProduk">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="struk-total">
+                <span>Total Belanja:</span>
+                <span id="total" class="total-price">Rp 0</span>
+            </div>
+
+            <div class="btn-area">
+                <button class="btn btn-cetak" onclick="window.print()">
+                    <i class="fas fa-print"></i> Cetak Struk
+                </button>
+
+                <button class="btn btn-wa" onclick="kirimWA()">
+                    <i class="fab fa-whatsapp"></i> Konfirmasi ke WA
+                </button>
+            </div>
+            
+            <div class="back-home">
+                <a href="index.html"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+            </div>
+        </div>
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Produk</th>
-                <th>Jumlah</th>
-                <th>Harga</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody id="isiProduk">
-        </tbody>
-    </table>
-
-    <div class="total" id="total">
-    </div>
-
-    <div class="btn-area">
-        <button class="btn cetak" onclick="window.print()">
-            Cetak Struk
-        </button>
-
-        <button class="btn wa" onclick="kirimWA()">
-            Kirim ke WhatsApp
-        </button>
-    </div>
-</div>
 
 <script>
-let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
-let nama = localStorage.getItem("nama");
-let hp = localStorage.getItem("hp");
-let alamat = localStorage.getItem("alamat");
+    // Mengambil data dari localStorage
+    let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+    let nama = localStorage.getItem("nama") || "-";
+    let hp = localStorage.getItem("hp") || "-";
+    let alamat = localStorage.getItem("alamat") || "-";
 
-let nomorPesanan = "TH-" + Date.now();
+    // Membuat nomor pesanan unik
+    let nomorPesanan = "TH-" + Math.floor(Date.now() / 1000); // Format TH-162XXXXXXX
 
-document.getElementById("noPesanan").innerHTML = "<b>No Pesanan:</b> " + nomorPesanan;
-document.getElementById("tanggal").innerHTML = "<b>Tanggal:</b> " + new Date().toLocaleString("id-ID");
-document.getElementById("nama").innerHTML = "<b>Nama:</b> " + nama;
-document.getElementById("hp").innerHTML = "<b>No HP:</b> " + hp;
-document.getElementById("alamat").innerHTML = "<b>Alamat:</b> " + alamat;
+    // Memasukkan data pembeli ke HTML
+    document.getElementById("noPesanan").innerText = nomorPesanan;
+    document.getElementById("tanggal").innerText = new Date().toLocaleString("id-ID");
+    document.getElementById("nama").innerText = nama;
+    document.getElementById("hp").innerText = hp;
+    document.getElementById("alamat").innerText = alamat;
 
-let total = 0;
-let tbody = document.getElementById("isiProduk");
+    let total = 0;
+    let tbody = document.getElementById("isiProduk");
+    let rincianPesanan = "";
 
-// Variabel baru untuk menampung teks rincian pesanan ke WA
-let rincianPesanan = "";
+    // Memasukkan data keranjang ke tabel
+    keranjang.forEach(item => {
+        total += item.subtotal;
+        
+        tbody.innerHTML += `
+        <tr>
+            <td>${item.produk}</td>
+            <td style="text-align: center;">${item.jumlah}</td>
+            <td>Rp ${item.harga.toLocaleString('id-ID')}</td>
+            <td style="text-align: right;">Rp ${item.subtotal.toLocaleString('id-ID')}</td>
+        </tr>
+        `;
 
-keranjang.forEach(item => {
-    total += item.subtotal;
-    
-    // Memasukkan data ke dalam tabel HTML
-    tbody.innerHTML += `
-    <tr>
-        <td>${item.produk}</td>
-        <td>${item.jumlah}</td>
-        <td>Rp ${item.harga.toLocaleString('id-ID')}</td>
-        <td>Rp ${item.subtotal.toLocaleString('id-ID')}</td>
-    </tr>
-    `;
+        rincianPesanan += `- ${item.produk} (${item.jumlah}x) : Rp ${item.subtotal.toLocaleString('id-ID')}\n`;
+    });
 
-    // Menyusun teks rincian pesanan untuk WhatsApp
-    rincianPesanan += `- ${item.produk} (${item.jumlah}x) : Rp ${item.subtotal.toLocaleString('id-ID')}\n`;
-});
+    document.getElementById("total").innerText = "Rp " + total.toLocaleString('id-ID');
 
-document.getElementById("total").innerHTML = "Total Belanja : Rp " + total.toLocaleString('id-ID');
-
-function kirimWA(){
-    // Memasukkan variabel rincianPesanan ke dalam pesan WA
-    let pesan = `Halo Toko Hikmah\n\nNo Pesanan : ${nomorPesanan}\nNama : ${nama}\nNo HP : ${hp}\nAlamat : ${alamat}\n\nRincian Pesanan:\n${rincianPesanan}\nTotal : Rp ${total.toLocaleString('id-ID')}\n\nTerima kasih`;
-    
-    window.open("https://wa.me/6287741790862?text=" + encodeURIComponent(pesan));
-}
+    // Fungsi Kirim WhatsApp
+    function kirimWA(){
+        let pesan = `Halo Toko Hikmah,\nSaya ingin mengkonfirmasi pesanan saya.\n\n*DETAIL PEMESAN:*\nNo Pesanan : ${nomorPesanan}\nNama : ${nama}\nNo HP : ${hp}\nAlamat : ${alamat}\n\n*RINCIAN PESANAN:*\n${rincianPesanan}\n*Total Pembayaran : Rp ${total.toLocaleString('id-ID')}*\n\nMohon info selanjutnya untuk pembayaran. Terima kasih!`;
+        
+        window.open("https://wa.me/6287741790862?text=" + encodeURIComponent(pesan)); // Nomor disesuaikan dengan footer di index.html
+    }
 </script>
 
 </body>
 </html>
+
