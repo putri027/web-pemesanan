@@ -7,9 +7,20 @@
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Tambahan CSS khusus untuk thumbnail gambar di tabel */
+        .img-thumbnail {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
 
+    <!-- Header Admin -->
     <header class="navbar">
         <div class="nav-container">
             <div class="logo">
@@ -27,6 +38,7 @@
     </header>
 
     <div class="admin-wrapper">
+        <!-- Menu Utama (Grid) -->
         <div class="dashboard-grid" id="menu-utama">
             <div class="dash-card" onclick="bukaMenu('kelola-produk')">
                 <div class="dash-icon"><i class="fas fa-box-open"></i></div>
@@ -50,48 +62,34 @@
             </div>
         </div>
 
+        <!-- Section: Kelola Produk -->
         <div id="kelola-produk" class="admin-content">
             <div class="header-section">
                 <h2><i class="fas fa-box-open"></i> Kelola Produk</h2>
                 <div class="action-buttons">
                     <button class="btn-kembali" onclick="kembaliKeMenu()"><i class="fas fa-arrow-left"></i> Kembali</button>
-                    <button class="btn-tambah"><i class="fas fa-plus"></i> Tambah</button>
+                    <button class="btn-tambah" onclick="tambahProduk()"><i class="fas fa-plus"></i> Tambah</button>
                 </div>
             </div>
             <div class="table-responsive">
                 <table class="admin-table">
                     <thead>
                         <tr>
+                            <th>Gambar</th>
                             <th>Nama Produk</th>
                             <th>Harga</th>
                             <th>Stok</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Bolu Cukke</td>
-                            <td>Rp 13.000</td>
-                            <td><span class="badge badge-green">Tersedia</span></td>
-                            <td>
-                                <button class="btn-aksi edit"><i class="fas fa-edit"></i></button>
-                                <button class="btn-aksi hapus"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Bolu Susu</td>
-                            <td>Rp 13.000</td>
-                            <td><span class="badge badge-green">Tersedia</span></td>
-                            <td>
-                                <button class="btn-aksi edit"><i class="fas fa-edit"></i></button>
-                                <button class="btn-aksi hapus"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
+                    <tbody id="tabelProdukBody">
+                        <!-- Data Produk akan di-render di sini -->
                     </tbody>
                 </table>
             </div>
         </div>
 
+        <!-- Section: Pesanan Masuk -->
         <div id="pesanan-masuk" class="admin-content">
             <div class="header-section">
                 <h2><i class="fas fa-shopping-bag"></i> Pesanan Masuk</h2>
@@ -109,11 +107,13 @@
                         </tr>
                     </thead>
                     <tbody id="tabelPesanan">
-                        </tbody>
+                        <!-- Data Pesanan dari LocalStorage -->
+                    </tbody>
                 </table>
             </div>
         </div>
 
+        <!-- Section: Data Pelanggan -->
         <div id="data-pelanggan" class="admin-content">
             <div class="header-section">
                 <h2><i class="fas fa-users"></i> Data Pelanggan</h2>
@@ -129,11 +129,13 @@
                         </tr>
                     </thead>
                     <tbody id="tabelPelanggan">
-                        </tbody>
+                        <!-- Data Pelanggan dari LocalStorage -->
+                    </tbody>
                 </table>
             </div>
         </div>
 
+        <!-- Section: Laporan Penjualan -->
         <div id="laporan-penjualan" class="admin-content">
             <div class="header-section">
                 <h2><i class="fas fa-chart-line"></i> Laporan Penjualan</h2>
@@ -148,10 +150,56 @@
             </div>
             <p class="text-muted text-center"><i class="fas fa-info-circle"></i> Data ini adalah simulasi dari pesanan terakhir di perangkat ini.</p>
         </div>
+
+        <!-- Modal Popup untuk Tambah/Edit Produk -->
+        <div id="modalProduk" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Tambah Produk</h3>
+                    <span class="close-modal" onclick="tutupModal()">&times;</span>
+                </div>
+                <form id="formProduk">
+                    <input type="hidden" id="produkId">
+                    
+                    <!-- Form Input Gambar Baru -->
+                    <div class="form-group">
+                        <label>Gambar Produk</label>
+                        <input type="file" id="gambarProduk" accept="image/*" style="background: none; border: none; padding: 0;">
+                        <!-- Hidden input untuk menyimpan format Base64 dari gambar -->
+                        <input type="hidden" id="gambarBase64">
+                        
+                        <!-- Tempat Preview Gambar -->
+                        <div id="previewContainer" style="margin-top: 10px; display: none; text-align: center;">
+                            <img id="previewGambar" src="" alt="Preview" style="max-width: 100%; max-height: 150px; border-radius: 8px; border: 1px solid #ddd;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nama Produk</label>
+                        <input type="text" id="namaProduk" placeholder="Contoh: Bolu Cukke" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Harga (Rp)</label>
+                        <input type="number" id="hargaProduk" placeholder="Contoh: 13000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Stok</label>
+                        <select id="stokProduk" required>
+                            <option value="Tersedia">Tersedia</option>
+                            <option value="Habis">Habis</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-pesan" style="margin-top: 10px;">Simpan Produk</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 
 <script>
-    // 1. Pengecekan Login
+    // ==========================================
+    // 1. PENGECEKAN LOGIN & LOGOUT
+    // ==========================================
     if(localStorage.getItem("adminLogin") !== "true"){
         window.location.href = "login.html";
     }
@@ -164,7 +212,9 @@
         }
     }
 
-    // 2. Logika Buka/Tutup Menu SPA
+    // ==========================================
+    // 2. NAVIGASI MENU DASHBOARD (SPA)
+    // ==========================================
     function bukaMenu(idMenu) {
         document.getElementById('menu-utama').style.display = 'none';
         
@@ -173,12 +223,10 @@
             content.style.display = 'none';
         });
 
-        // Animasi fade in sederhana
         let selectedMenu = document.getElementById(idMenu);
         selectedMenu.style.display = 'block';
         selectedMenu.style.animation = 'fadeIn 0.3s ease';
 
-        // Load data khusus untuk menu tertentu
         if (idMenu === 'pesanan-masuk' || idMenu === 'data-pelanggan' || idMenu === 'laporan-penjualan') {
             loadDataDariLocalStorage();
         }
@@ -195,7 +243,9 @@
         menuUtama.style.animation = 'fadeIn 0.3s ease';
     }
 
-    // 3. Menarik Data dari Checkout (Simulasi LocalStorage)
+    // ==========================================
+    // 3. TARIK DATA PESANAN DARI CHECKOUT
+    // ==========================================
     function loadDataDariLocalStorage() {
         let nama = localStorage.getItem("nama");
         let hp = localStorage.getItem("hp");
@@ -234,13 +284,166 @@
 
             teksPendapatan.innerHTML = "Rp " + totalBelanja.toLocaleString('id-ID');
         } else {
-            let emptyRow = `<tr><td colspan="5" class="text-center empty-cart" style="padding: 30px;"><i class="fas fa-folder-open" style="font-size:30px; color:#ccc; margin-bottom:10px; display:block;"></i>Belum ada data saat ini.</td></tr>`;
+            let emptyRow = `<tr><td colspan="5" class="text-center empty-cart" style="padding: 30px;"><i class="fas fa-folder-open" style="font-size:30px; color:#ccc; margin-bottom:10px; display:block;"></i>Belum ada pesanan saat ini.</td></tr>`;
             tbodyPesanan.innerHTML = emptyRow;
             
-            let emptyRowPelanggan = `<tr><td colspan="3" class="text-center empty-cart" style="padding: 30px;">Belum ada data saat ini.</td></tr>`;
+            let emptyRowPelanggan = `<tr><td colspan="3" class="text-center empty-cart" style="padding: 30px;">Belum ada data pelanggan saat ini.</td></tr>`;
             tbodyPelanggan.innerHTML = emptyRowPelanggan;
             
             teksPendapatan.innerHTML = "Rp 0";
+        }
+    }
+
+    // ==========================================
+    // 4. KELOLA PRODUK (CRUD) + GAMBAR
+    // ==========================================
+    
+    // Data dummy default dengan referensi folder lokal agar gambar muncul saat pertama kali dibuka
+    let produkList = JSON.parse(localStorage.getItem("produkList")) || [
+        { id: 1, nama: "Bolu Cukke", harga: 13000, stok: "Tersedia", gambar: "images/bolu cukke.jpg" },
+        { id: 2, nama: "Bolu Susu", harga: 13000, stok: "Tersedia", gambar: "images/bolu susu.jpeg" },
+        { id: 3, nama: "Cucuru", harga: 10000, stok: "Tersedia", gambar: "images/Cucuru.jpg" },
+        { id: 4, nama: "Baje Canggoreng", harga: 10000, stok: "Tersedia", gambar: "images/baje canggoreng.jpg" }
+    ];
+
+    const tbodyProduk = document.getElementById("tabelProdukBody");
+    const modalProduk = document.getElementById("modalProduk");
+
+    // READ (Tampilkan Data ke Tabel)
+    function renderProduk() {
+        tbodyProduk.innerHTML = ""; 
+        
+        if (produkList.length === 0) {
+            tbodyProduk.innerHTML = `<tr><td colspan="5" class="text-center text-muted" style="padding: 20px;">Belum ada produk. Silakan tambah produk.</td></tr>`;
+            return;
+        }
+
+        produkList.forEach(item => {
+            let badgeClass = item.stok === "Tersedia" ? "badge-green" : "badge-yellow";
+            // Jika gambar kosong, tampilkan placeholder bawaan
+            let imgSrc = item.gambar ? item.gambar : "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=150&auto=format&fit=crop";
+
+            tbodyProduk.innerHTML += `
+                <tr>
+                    <td><img src="${imgSrc}" class="img-thumbnail" alt="Gambar ${item.nama}"></td>
+                    <td><strong>${item.nama}</strong></td>
+                    <td>Rp ${parseInt(item.harga).toLocaleString('id-ID')}</td>
+                    <td><span class="badge ${badgeClass}">${item.stok}</span></td>
+                    <td>
+                        <button class="btn-aksi edit" onclick="editProduk(${item.id})" title="Edit Produk"><i class="fas fa-edit"></i></button>
+                        <button class="btn-aksi hapus" onclick="hapusProduk(${item.id})" title="Hapus Produk"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    renderProduk(); // Panggil saat halaman pertama kali diload
+
+    // Event Listener untuk Upload Gambar & Preview
+    document.getElementById("gambarProduk").addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Konversi gambar ke teks Base64 lalu simpan ke input hidden
+                document.getElementById("gambarBase64").value = e.target.result;
+                
+                // Tampilkan Preview
+                document.getElementById("previewGambar").src = e.target.result;
+                document.getElementById("previewContainer").style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Tampilkan Modal TAMBAH
+    function tambahProduk() {
+        document.getElementById("modalTitle").innerText = "Tambah Produk Baru";
+        document.getElementById("formProduk").reset(); 
+        document.getElementById("produkId").value = ""; 
+        
+        // Reset preview gambar
+        document.getElementById("gambarBase64").value = "";
+        document.getElementById("previewContainer").style.display = "none";
+        
+        modalProduk.style.display = "flex";
+    }
+
+    // Tampilkan Modal EDIT
+    function editProduk(id) {
+        document.getElementById("modalTitle").innerText = "Edit Produk";
+        let produk = produkList.find(p => p.id === id); 
+        
+        if(produk) {
+            document.getElementById("produkId").value = produk.id;
+            document.getElementById("namaProduk").value = produk.nama;
+            document.getElementById("hargaProduk").value = produk.harga;
+            document.getElementById("stokProduk").value = produk.stok;
+            
+            // Atur gambar jika ada
+            if (produk.gambar) {
+                document.getElementById("gambarBase64").value = produk.gambar;
+                document.getElementById("previewGambar").src = produk.gambar;
+                document.getElementById("previewContainer").style.display = "block";
+            } else {
+                document.getElementById("gambarBase64").value = "";
+                document.getElementById("previewContainer").style.display = "none";
+            }
+
+            modalProduk.style.display = "flex";
+        }
+    }
+
+    // Tutup Modal
+    function tutupModal() {
+        modalProduk.style.display = "none";
+    }
+
+    // CREATE & UPDATE (Simpan Data dari Form)
+    document.getElementById("formProduk").addEventListener("submit", function(e) {
+        e.preventDefault();
+        
+        let id = document.getElementById("produkId").value;
+        let nama = document.getElementById("namaProduk").value;
+        let harga = document.getElementById("hargaProduk").value;
+        let stok = document.getElementById("stokProduk").value;
+        let gambar = document.getElementById("gambarBase64").value; // Ambil string Base64 gambar
+
+        if (id) {
+            // Logika Update (Edit)
+            let index = produkList.findIndex(p => p.id == id);
+            produkList[index] = { 
+                id: parseInt(id), 
+                nama: nama, 
+                harga: harga, 
+                stok: stok,
+                gambar: gambar // Simpan gambar
+            };
+        } else {
+            // Logika Create (Tambah)
+            let newId = produkList.length > 0 ? Math.max(...produkList.map(p => p.id)) + 1 : 1;
+            produkList.push({ 
+                id: newId, 
+                nama: nama, 
+                harga: harga, 
+                stok: stok,
+                gambar: gambar // Simpan gambar
+            });
+        }
+
+        localStorage.setItem("produkList", JSON.stringify(produkList));
+        tutupModal();
+        renderProduk();
+    });
+
+    // DELETE (Hapus Data)
+    function hapusProduk(id) {
+        let konfirmasi = confirm("Apakah Anda yakin ingin menghapus produk ini?");
+        if (konfirmasi) {
+            produkList = produkList.filter(p => p.id !== id);
+            localStorage.setItem("produkList", JSON.stringify(produkList));
+            renderProduk(); 
         }
     }
 </script>
