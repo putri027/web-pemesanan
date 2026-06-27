@@ -6,6 +6,85 @@
     <title>Toko Hikmah - Kue Tradisional</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 80px 20px;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        /* Latar belakang 2 gambar (logo soppeng & logo utama) yang di-blur dan tampil utuh */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
+            background-color: #ffffff;
+            
+            /* Menggunakan dua background sekaligus */
+            background-image: url('images/logo_soppeng.png'), url('images/logo.png');
+            /* Mengatur posisi agar berdampingan (kiri dan kanan) */
+            background-position: 27% center, 75% center;
+            /* Memastikan kedua gambar tampil penuh tanpa terpotong */
+            background-size: 16% auto, 20% auto; 
+            background-repeat: no-repeat, no-repeat;
+            
+            filter: blur(1px); /* Tingkat blur */
+            z-index: 1;
+        }
+
+        /* Overlay warna gelap agar teks tetap kontras dan mudah dibaca */
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 100, 0, 0.65); /* Overlay hijau transparan */
+            z-index: 2;
+        }
+
+        /* Memastikan teks berada di atas lapisan background dan overlay */
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+        }
+
+        .hero-content h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .hero-content p {
+            font-size: 1.2em;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .nav-logo {
+            height: 40px; 
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* Penyesuaian posisi logo background di layar HP (Mobile) */
+        @media (max-width: 768px) {
+            .hero::before {
+                background-position: center 20%, center 80%;
+                background-size: 60% auto, 60% auto;
+            }
+        }
+    </style>
 </head>
 <body>
 
